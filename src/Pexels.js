@@ -1,88 +1,73 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import { Card } from 'react-bootstrap'
+import Photocard from './Component/Photocard';
+
 
 function Pexels() {
 
     const [searchText, setSearchText] = useState('');
-    const [perPage, setPerPage] = useState("");
-    const [result, setResult] = useState([]);
-    const [loadings, setLoading] = useState(true);
+    const [photographer, setPhotographer] = useState('');
+    const [photos, setPhotos] = useState([]);
+    const [loading, setLoading] = useState(false);
 
+    const handleSubmit = () => {
+        setLoading(true);
 
-    function handleChange(event) {
-        const searchText = event.target.value;
-        setSearchText(searchText);
-    }
-
-    function noOfPics(event) {
-        const perPage = event.target.value;
-        setPerPage(perPage);
-    }
-
-    function handleSubmit(event) {
-        event.preventDefault();
-        const url = "https://api.pexels.com/v1/search?query=" + searchText + "&per_page=";
+        const url = "https://api.pexels.com/v1/search?query=" + searchText;
         const access_token = '563492ad6f91700001000001e7a714553bb74edf96bf7757f128b36b';
         Axios.get(url, {
             headers: {
                 'Authorization': `${access_token}`
             }
-        }).then(data => {
-            console.log(data);
-            setResult(data.data.photos);
+        }).then((res) => {
+            setPhotos(res.data.photos);
+            setPhotographer(res.data.photos.photographer);
+            setLoading(true);
+            console.log(res.data.photos);
+        }).catch(err => {
+            throw Error(err.message);
         })
     }
-    return ( <
-        form onSubmit = { handleSubmit } >
-        <
-        div className = "card-header main-search" >
-        <
-        div className = "row" >
-        <
-        div className = "col-12 col-md-3 col-xl-3" >
-        <
-        input onChange = { handleChange }
-        className = "AutoFocus form-control"
-        placeholder = "Type something..."
-        type = "text" / >
-        <
-        /div>    <
-        div className = "ml-auto" >
-        <
-        input type = "submit"
-        value = "Search"
-        className = "btn btn-primary search-btn" / >
-        <
-        /div>   <
-        /div>   <
-        /div>   <
-        div class = "container" >
-        <
-        div class = "row" > {
-            result.map(searchText => ( <
-                div className = "col-sm-4" >
-                <
-                Card style = {
-                    { 'margin-top': '10px' } } >
-                <
-                Card.Img variant = "top"
-                src = { searchText.src.landscape }
-                alt = { searchText.photographer }
-                />   <
-                Card.Body >
-                <
-                h5 className = "card-title" > Card title < /h5>   <
-                a className = "btn btn-primary" > Know more < /a>   <
-                /Card.Body>   <
-                /Card>   <
-                /div>  
-            ))
-        } <
-        /div>   <
-        /div>   <
-        /form>  
-    )
-}
 
-export default Pexels;
+    // useEffect
+    useEffect(() => {
+        if (searchText !== '') {
+            handleSubmit();
+        }
+    }, [searchText])
+    return ( <
+        div className = "container" >
+        <
+        h1 > Pexels Photo App < /h1> <
+        form >
+        <
+        input type = "text"
+        placeholder = "Search photos..."
+        value = { searchText }
+        onChange = {
+            (event) => {
+                console.log(event.target.value);
+                setSearchText(event.target.value)
+            }
+        }
+        /> <
+        /form> {
+            searchText === '' ? ( <
+                    h4 > No photos < /h4>
+                ) : ( <
+                    section > {
+                        loading ? ( <
+                            h4 > Loading... < /h4>
+                        ) : ( < Photocard src = { src.medium }
+                                photographer = { photographer }
+                                />)
+                            } <
+                            /section>
+                    )
+                } <
+                /div>
+        )
+    }
+
+    export default Pexels;
