@@ -2,21 +2,21 @@ import React from 'react'
 import '../App.css';
 
 
-const Photocard = (props) => {
+const Photos = (props) => {
     return ( <
-        div >
+        div className = "col-lg-3 mb-5" >
         <
-        img className = "photo"
+        img className = "photo mb-3"
         alt = 'pics'
         src = { props.url }
         /> <
-        div className = "" >
+        div className = "mb-3 d-flex" >
         <
-        h5 className = "" > Photographer < /h5> <
-        h6 className = "" > { props.photographer } < /h6> <
+        h5 className = "mb-0" > Photographer < /h5> <
+        h6 > { props.photographer } < /h6> <
         /div> <
         /div>
     )
 }
 
-export default Photocard
+export default Photos;

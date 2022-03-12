@@ -18,4 +18,4 @@ const Photocollage = props => {
     )
 }
 
-export default Photocollage
+export default Photocollage;

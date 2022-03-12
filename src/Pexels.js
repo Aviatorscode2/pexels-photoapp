@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
-import { Card } from 'react-bootstrap'
-import Photocard from './Component/Photocard';
+import Photocollage from './Component/Photocollage'
+import './App.css';
 
 
 function Pexels() {
@@ -36,11 +36,12 @@ function Pexels() {
             handleSubmit();
         }
     }, [searchText])
+
     return ( <
-        div className = "container" >
+        div className = "container py-5" >
         <
         h1 > Pexels Photo App < /h1> <
-        form >
+        form className = 'mb-5' >
         <
         input type = "text"
         placeholder = "Search photos..."
@@ -54,20 +55,18 @@ function Pexels() {
         /> <
         /form> {
             searchText === '' ? ( <
-                    h4 > No photos < /h4>
-                ) : ( <
-                    section > {
-                        loading ? ( <
-                            h4 > Loading... < /h4>
-                        ) : ( < Photocard src = { src.medium }
-                                photographer = { photographer }
-                                />)
-                            } <
-                            /section>
-                    )
-                } <
-                /div>
-        )
-    }
+                h4 > No photos < /h4>
+            ) : ( <
+                section >
+                <
+                Photocollage photos = { photos }
+                photographer = { photographer }
+                /> <
+                /section>
+            )
+        } <
+        /div>
+    )
+}
 
-    export default Pexels;
+export default Pexels;
