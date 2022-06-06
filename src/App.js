@@ -1,13 +1,8 @@
-import Pexels from "./Pexels";
+import Pexels from './Pexels';
 import './App.css';
 
 function App() {
-
-    return ( <
-        Pexels / >
-    )
-
-
+  return <Pexels />;
 }
 
 export default App;
